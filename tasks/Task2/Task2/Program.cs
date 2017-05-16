@@ -10,19 +10,36 @@ namespace Task2
     {
         static void Main(string[] args)
         {
+            var empA = new Employee("Emp", "A");
+            var empB = new Employee("Emp", "B");
+            var empC = new Employee("Emp", "C");
+            var empD = new Employee("Emp", "D");
+
             var list = new List<Ticket>
             {
-                new Ticket("Carlos", "Description 1"),
-                new Ticket(DateTime.Now, "Harald"),
-                new Ticket(DateTime.Now, "Tayel", "Description 2")
+                new Ticket(empA, "Description 1"),
+                new Ticket(DateTime.Now, empB),
+                new Ticket(DateTime.Now, empC, "Description 2")
             };
 
             foreach (var ticket in list)
                 for (var i = 0; i < 5; i++)
-                    ticket.AddLogEntry($"Logentry{i} for Ticket {ticket.Ticketnumber}");
+                    ticket.AddLogEntry($"Logentry{i} for Ticket {ticket.Ticketnumber}", empD);
                 
             foreach (var ticket in list)
                 ticket.PrintAllTicketInfo();
+
+
+            var personList = new List<IPerson>
+            {
+                empA, empB, empC,
+                new Customer()
+            };
+
+
+            foreach (var person in personList)
+                person.PrintFullName();
+            
 
             Console.Read();
         }

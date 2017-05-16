@@ -21,11 +21,13 @@ namespace Task2
     {
         public DateTime dateTime;
         public string logData;
+        public Employee author;
 
-        public TicketLog(DateTime dateTime, string logData)
+        public TicketLog(DateTime dateTime, string logData, Employee author)
         {
             this.dateTime = dateTime;
             this.logData = logData;
+            this.author = author;
         }
     }
 
@@ -33,17 +35,16 @@ namespace Task2
     {
         /* fields */
         private static int runningTicketnumber = 0;
-        private int ticketnumber;
-        private DateTime openDate;
-        private string openedBy;
-        private OpeningChannel openingChannel;
+        private readonly int ticketnumber;
+        private readonly DateTime openDate;
+        private Employee openedBy;
         private string description;
         private readonly SortedList<int, TicketLog> ticketLog;
         private int ticketLogIndex = 0;
 
 
         /* constructors */
-        public Ticket(DateTime openDate, string openedBy)
+        public Ticket(DateTime openDate, Employee openedBy)
         {
             ticketnumber = runningTicketnumber++;
             ticketLog = new SortedList<int, TicketLog>();
@@ -53,50 +54,36 @@ namespace Task2
         }
 
         public Ticket()
-            : this(DateTime.Now, string.Empty) { }
+            : this(DateTime.Now, new Employee("firstName", "lastName")) { }
 
-        public Ticket(string openedBy)
+        public Ticket(Employee openedBy)
             : this(DateTime.Now, openedBy) { }
 
-        public Ticket(string openedBy, string description)
+        public Ticket(Employee openedBy, string description)
             : this(DateTime.Now, openedBy, description) { }
 
-        public Ticket(DateTime openDate, string openedBy, string description)
+        public Ticket(DateTime openDate, Employee openedBy, string description)
             : this(DateTime.Now, openedBy)
         { this.description = description; }
 
 
         /* properties */
-        public int Ticketnumber {
-            get { return ticketnumber; }
-        }
+        public int Ticketnumber => ticketnumber;
 
-        public DateTime OpenDate {
-            get { return openDate; }
-        }
+        public DateTime OpenDate => openDate;
 
-        public string OpenedBy
+        public Employee OpenedBy
         {
             get { return openedBy; }
             set { openedBy = value; }
         }
 
-        public OpeningChannel OpeningChannel
-        {
-            get { return openingChannel; }
-            set { openingChannel = value; }
-        }
+        public OpeningChannel OpeningChannel { get; set; }
 
-        public string Description
-        {
-            get { return description; }
-        }
+        public string Description => description;
 
-        public SortedList<int, TicketLog> TicketLog
-        {
-            get { return this.ticketLog; }
-        }
-        
+        public SortedList<int, TicketLog> TicketLog => this.ticketLog;
+
 
         /* methods */
         public void UpdateDescription(string description)
@@ -104,15 +91,15 @@ namespace Task2
             this.description = description;
         }
 
-        public void AddLogEntry(string logData)
+        public void AddLogEntry(string logData, Employee author)
         {
-            var entry = new TicketLog(DateTime.Now, logData);
+            var entry = new TicketLog(DateTime.Now, logData, author);
             ticketLog.Add(this.ticketLogIndex++, entry);
         }
 
-        public void AddLogEntry(DateTime dateTime, string logData)
+        public void AddLogEntry(DateTime dateTime, string logData, Employee author)
         {
-            var entry = new TicketLog(dateTime, logData);
+            var entry = new TicketLog(dateTime, logData, author);
             ticketLog.Add(this.ticketLogIndex++, entry);
         }
 
@@ -137,7 +124,8 @@ namespace Task2
             Console.Out.WriteLine("##########");
             foreach (var entry in ticketLog)
             {
-                Console.Out.WriteLine("# Entry {0}: {1} {2}", entry.Key, entry.Value.dateTime, entry.Value.logData);
+                Console.Out.WriteLine("# Entry {0}: {1} {2}", entry.Key, entry.Value.dateTime, 
+                    entry.Value.author.PrintFullName(), entry.Value.logData);
             }
             Console.Out.WriteLine("##########");
         }
