@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
@@ -33,14 +30,15 @@ namespace Task2
             var personList = new List<IPerson>
             {
                 empA, empB, empC,
-                new Customer()
+                new Customer("Customer", "A")
             };
 
 
             foreach (var person in personList)
-                person.PrintFullName();
-            
-
+            {
+                Console.Out.Write(person.GetType().ToString().Split('.')[1] + ": ");
+                person.PrintPersonData();
+            }
             Console.Read();
         }
     }

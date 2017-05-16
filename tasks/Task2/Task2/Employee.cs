@@ -1,21 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
     class Employee : Person
     {
-        private static int runningEmployeeID = 0;
+        private static int _employeeID = 0;
 
         public Employee(string firstName, string lastName)
             : base(firstName, lastName)
         {
-            EmployeeID = runningEmployeeID++;
+            EmployeeID = _employeeID++;
         }
 
         public int EmployeeID { get; }
+
+
+        #region IPerson
+        public override void PrintPersonData()
+        {
+            Console.Out.WriteLine("{0}: {1} {2}", EmployeeID, FirstName, LastName);
+        } 
+        #endregion
     }
 }

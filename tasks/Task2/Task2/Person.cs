@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
@@ -10,7 +6,6 @@ namespace Task2
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
 
         public Person()
             : this("firstName", "lastName") { }
@@ -32,6 +27,11 @@ namespace Task2
         public void PrintFullName()
         {
             Console.Out.WriteLine("{0} {1}", FirstName, LastName);
+        }
+
+        public string GetFullName()
+        {
+            return FirstName + " " + LastName;
         }
 
         #endregion

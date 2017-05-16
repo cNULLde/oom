@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
@@ -38,7 +33,6 @@ namespace Task2
         private readonly int ticketnumber;
         private readonly DateTime openDate;
         private Employee openedBy;
-        private string description;
         private readonly SortedList<int, TicketLog> ticketLog;
         private int ticketLogIndex = 0;
 
@@ -64,7 +58,7 @@ namespace Task2
 
         public Ticket(DateTime openDate, Employee openedBy, string description)
             : this(DateTime.Now, openedBy)
-        { this.description = description; }
+        { this.Description = description; }
 
 
         /* properties */
@@ -80,54 +74,55 @@ namespace Task2
 
         public OpeningChannel OpeningChannel { get; set; }
 
-        public string Description => description;
+        public string Description { get; private set; }
 
-        public SortedList<int, TicketLog> TicketLog => this.ticketLog;
+        public SortedList<int, TicketLog> TicketLog => ticketLog;
 
 
         /* methods */
         public void UpdateDescription(string description)
         {
-            this.description = description;
+            /* validation */
+            Description = description;
         }
 
         public void AddLogEntry(string logData, Employee author)
         {
             var entry = new TicketLog(DateTime.Now, logData, author);
-            ticketLog.Add(this.ticketLogIndex++, entry);
+            ticketLog.Add(ticketLogIndex++, entry);
         }
 
         public void AddLogEntry(DateTime dateTime, string logData, Employee author)
         {
             var entry = new TicketLog(dateTime, logData, author);
-            ticketLog.Add(this.ticketLogIndex++, entry);
+            ticketLog.Add(ticketLogIndex++, entry);
         }
 
         public void PrintTicketLog()
         {
             foreach (var entry in ticketLog)
             {
-                Console.Out.WriteLine("Entry {0}: {1} {2}", entry.Key ,entry.Value.dateTime, entry.Value.logData);
+                Console.Out.WriteLine("Entry {0}: {1} {2} by: {3}", entry.Key ,entry.Value.dateTime, entry.Value.logData, entry.Value.author.GetFullName());
             }
         }
 
         public void PrintAllTicketInfo()
         {
-            Console.Out.WriteLine("##########");
+            Console.Out.WriteLine("####################");
             Console.Out.WriteLine("### Ticket {0}", ticketnumber);
             Console.Out.WriteLine("##########");
-            Console.Out.WriteLine("### Opened by {0} on {1}", openedBy, openDate);
+            Console.Out.WriteLine("### Opened by {0} on {1}", openedBy.GetFullName(), openDate);
             Console.Out.WriteLine("##########");
-            Console.Out.WriteLine("### Description: {0}", description);
+            Console.Out.WriteLine("### Description: {0}", Description);
             Console.Out.WriteLine("##########");
             Console.Out.WriteLine("### Ticketlog entries:");
             Console.Out.WriteLine("##########");
             foreach (var entry in ticketLog)
             {
-                Console.Out.WriteLine("# Entry {0}: {1} {2}", entry.Key, entry.Value.dateTime, 
-                    entry.Value.author.PrintFullName(), entry.Value.logData);
+                Console.Out.WriteLine("# Entry {0}: {1} {2} {3}", entry.Key, entry.Value.dateTime, 
+                    entry.Value.author.GetFullName(), entry.Value.logData);
             }
-            Console.Out.WriteLine("##########");
+            Console.Out.WriteLine("####################");
         }
     }
 
