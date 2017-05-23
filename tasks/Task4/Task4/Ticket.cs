@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Task2
+namespace Task4
 {
     public enum OpeningChannel
     {
-        Call, CallPersonal,
-        Mail, MailPersonal,
-        Chat, ChatPersonal,
-        Online, Proactive
+        Call,
+        CallPersonal,
+        Mail,
+        MailPersonal,
+        Chat,
+        ChatPersonal,
+        Online,
+        Proactive
     }
 
     class TicketLog
@@ -34,15 +38,19 @@ namespace Task2
     class Ticket
     {
         #region Fields
+
         private static int _runningTicketnumber = 0;
         private readonly SortedList<int, TicketLog> _ticketLog;
         private int _ticketLogIndex = 0;
+
         #endregion
 
-
         #region Constructors
+
         private Ticket(DateTime openDate, Employee openedBy)
         {
+            if (openedBy == null) throw new ArgumentException("Can't be opened by nobody.", nameof(openedBy));
+
             Ticketnumber = _runningTicketnumber++;
             _ticketLog = new SortedList<int, TicketLog>();
 
@@ -51,25 +59,36 @@ namespace Task2
         }
 
         private Ticket(DateTime openDate, Employee openedBy, string description)
-            : this(openDate, openedBy) { Description = description; }
-        
+            : this(openDate, openedBy)
+        {
+            // still can be ""
+            if (description == null && description != string.Empty)
+                throw new ArgumentException("Ticket can't be opened with Null-String Description", nameof(description));
+
+            Description = description;
+        }
+
 
         public Ticket(Employee openedBy, string description)
-            : this(DateTime.Now, openedBy, description) { }
+            : this(DateTime.Now, openedBy, description)
+        {
+        }
+
         #endregion
 
-        
         #region Properties
+
         public int Ticketnumber { get; set; }
         public DateTime OpenDate { get; set; }
         public Employee OpenedBy { get; set; }
         public OpeningChannel OpeningChannel { get; set; }
         public string Description { get; private set; }
         public SortedList<int, TicketLog> TicketLog => _ticketLog;
+
         #endregion
-        
 
         #region Methods
+
         public void UpdateDescription(string description)
         {
             Description = description;
@@ -109,7 +128,7 @@ namespace Task2
                 entry.Value.PrintTicketLog();
             }
             Console.WriteLine("####################");
-        } 
+        }
         #endregion
     }
 }

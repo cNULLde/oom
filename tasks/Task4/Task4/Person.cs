@@ -1,6 +1,7 @@
 ﻿using System;
+using NUnit.Framework;
 
-namespace Task2
+namespace Task4
 {
     class Person : IPerson
     {
@@ -12,6 +13,11 @@ namespace Task2
 
         public Person(string firstName, string lastName)
         {
+            if(string.IsNullOrEmpty(firstName))
+                throw new ArgumentException("Employee can't have no firsts name", nameof(firstName));
+            if (string.IsNullOrEmpty(lastName))
+                throw new ArgumentException("Employee can't have no last name", nameof(lastName));
+
             FirstName = firstName;
             LastName = lastName;
         }

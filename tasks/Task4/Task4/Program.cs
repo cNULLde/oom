@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Task2;
+using Task4;
 
 namespace Task4
 {
@@ -33,8 +33,6 @@ namespace Task4
 
 
             string s = JsonConvert.SerializeObject(list.First());
-
-            //File.Create(@"F:\Projects\Git\oom\tasks\Task4\Task4\ticket.json");
 
             File.WriteAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\ticket.json", s);
 

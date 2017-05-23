@@ -1,4 +1,4 @@
-﻿namespace Task2
+﻿namespace Task4
 {
     public interface IPerson
     {
