@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Task4
 {
@@ -12,13 +13,19 @@ namespace Task4
             EmployeeID = _employeeID++;
         }
 
+        [JsonConstructor]
+        public Employee(string firstName, string lastName, int employeeID) : base(firstName, lastName)
+        {
+            EmployeeID = employeeID;
+        }
+
         public int EmployeeID { get; }
 
 
         #region IPerson
         public override void PrintPersonData()
         {
-            Console.Out.WriteLine("{0}: {1} {2}", EmployeeID, FirstName, LastName);
+            Console.Out.WriteLine("EmpID {0}: {1} {2}", EmployeeID, FirstName, LastName);
         } 
         #endregion
     }

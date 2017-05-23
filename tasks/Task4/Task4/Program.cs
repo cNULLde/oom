@@ -29,20 +29,45 @@ namespace Task4
             foreach (var ticket in list)
                 ticket.PrintAllTicketInfo();
 
-           Console.WriteLine("Serializing ....");
+            //#region SingleObjectSerialisation
+            //Console.WriteLine("Serializing ....");
+            //string s = JsonConvert.SerializeObject(list.First());
+            //File.WriteAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\ticket.json", s);
+            //string newTick = File.ReadAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\ticket.json");
+            //Ticket x = JsonConvert.DeserializeObject<Ticket>(newTick);
+            //Console.WriteLine("Deserializing ....");
+
+            //x.PrintAllTicketInfo();
+            //#endregion
 
 
-            string s = JsonConvert.SerializeObject(list.First());
+            #region SerializeListOfIPerson
+            var persons = new List<IPerson>
+            {
+                new Employee("listemp1","listemp1"),
+                new Customer("listcus1","listcus1"),
+                new Employee("listemp2","listemp2"),
+                new Customer("listcus2","listcus2"),
+            };
 
-            File.WriteAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\ticket.json", s);
+            var personsJson = JsonConvert.SerializeObject(persons, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            });
 
-            string newTick = File.ReadAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\ticket.json");
+            File.WriteAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\persons.json", personsJson);
+            var newPersonJson = File.ReadAllText(@"F:\Projects\Git\oom\tasks\Task4\Task4\persons.json");
 
-            Ticket x = JsonConvert.DeserializeObject<Ticket>(newTick);
+            var newPersons = JsonConvert.DeserializeObject<List<IPerson>>(newPersonJson, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            });
 
-            Console.WriteLine("Deserializing ....");
+            foreach (var person in newPersons)
+                person.PrintPersonData();
+            #endregion
 
-            x.PrintAllTicketInfo();
         }
     }
 }

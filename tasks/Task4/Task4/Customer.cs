@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Task4
 {
@@ -12,6 +13,12 @@ namespace Task4
             CustomerID = _customerID++;
         }
 
+        [JsonConstructor]
+        public Customer(string firstName, string lastName, int customerID) : base(firstName, lastName)
+        {
+            CustomerID = customerID;
+        }
+
 
         public int CustomerID { get; }
 
@@ -19,7 +26,7 @@ namespace Task4
 
         public override void PrintPersonData()
         {
-            Console.Out.WriteLine("{0}: {1} {2}", CustomerID, FirstName, LastName);
+            Console.Out.WriteLine("CustID {0}: {1} {2}", CustomerID, FirstName, LastName);
         }
 
         #endregion

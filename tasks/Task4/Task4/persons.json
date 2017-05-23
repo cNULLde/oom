@@ -1,0 +1,26 @@
+[
+  {
+    "$type": "Task4.Employee, Task4",
+    "EmployeeID": 2,
+    "FirstName": "listemp1",
+    "LastName": "listemp1"
+  },
+  {
+    "$type": "Task4.Customer, Task4",
+    "CustomerID": 0,
+    "FirstName": "listcus1",
+    "LastName": "listcus1"
+  },
+  {
+    "$type": "Task4.Employee, Task4",
+    "EmployeeID": 3,
+    "FirstName": "listemp2",
+    "LastName": "listemp2"
+  },
+  {
+    "$type": "Task4.Customer, Task4",
+    "CustomerID": 1,
+    "FirstName": "listcus2",
+    "LastName": "listcus2"
+  }
+]
